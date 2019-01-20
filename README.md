@@ -62,6 +62,11 @@ these lines to your `.zshrc`:
 If you are enabling `url-quote-magic`, make sure to load it first and
 then load `git-escape-magic`.
 
+zplug
+-----
+
+	zplug "kamuiroeru/zsh-git-escape-magic"
+
 License
 -------
 
