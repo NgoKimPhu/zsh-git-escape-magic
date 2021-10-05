@@ -22,6 +22,7 @@
 git-escape-magic.self-insert() {
     emulate -L zsh
     setopt extendedglob
+    local __gem_patterns=('(*/|)git(|-[^/]##)' ${(k)aliases[(R)git]})
     local self_insert_function
     zstyle -s ':git-escape-magic' self-insert-function self_insert_function
 
@@ -34,11 +35,11 @@ git-escape-magic.self-insert() {
     } && {
         local -a words
         words=("${(@Q)${(z)lbuf}}")
-        [[ "$words[(i)(*/|)git(|-[^/]##)]" -le $#words ]]
+        [[ "$words[(i)${(~j:|:)__gem_patterns}]" -le $#words ]]
     }
     then
         local i
-        i="$words[(I)([;(){\&]|\&[\&\!]|\|\||[=<>]\(*)]"
+        i="$words[(I)([;(){&]|&[&\!]|\|\||[=<>]\(*)]"
         if [[ $i -gt 0 ]]; then
             shift $((i-1)) words
             if [[ "$words[1]" == [\=\<\>]\(* ]]; then
@@ -54,7 +55,7 @@ git-escape-magic.self-insert() {
         while [[ "$words[1]" == [A-Za-z_][A-Za-z0-9_]#=* ]]; do
             shift words
         done
-        [[ "$words[1]" == (*/|)git(|-[^/]##) ]] && {
+        [[ "$words[1]" == (${(~j:|:)__gem_patterns}) ]] && {
             local subcommand
             subcommand="${words[1]##*/git-}"
             if [[ -z "$subcommand" ]]; then
