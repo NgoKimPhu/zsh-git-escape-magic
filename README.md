@@ -22,6 +22,8 @@ git.  Every time you type one of these meta-characters on a git
 command line, it automatically escapes the meta-character with a
 backslash as necessary and as appropriate.
 
+And now it also works for git's aliases.
+
 Examples:
 
 	% git reset HEAD [Hit <^>]
@@ -50,6 +52,12 @@ Examples:
 	% git add * [Hit <~>]
 	% git add *~
 
+
+	# Shoulds works after && or ; and also for aliases
+	% alias g=git
+	% : && g checkout @[Hit <^>]
+	% : && g checkout @\^
+
 How to set up
 -------------
 
@@ -65,7 +73,22 @@ then load `git-escape-magic`.
 zplug
 -----
 
-	zplug "kamuiroeru/zsh-git-escape-magic"
+	zplug "NgoKimPhu/zsh-git-escape-magic"
+
+oh-my-zsh
+_________
+
+Clone this repo into your custom plugin directory.
+
+z4h
+___
+
+Add these to your `~/.zshrc`
+
+	z4h install NgoKimPhu/zsh-git-escape-magic || return
+	# [...]
+	fpath+=($Z4H/NgoKimPhu/zsh-git-escape-magic)
+	z4h source $Z4H/NgoKimPhu/zsh-git-escape-magic/git-escape-magic.plugin.zsh
 
 License
 -------
