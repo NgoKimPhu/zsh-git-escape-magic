@@ -35,7 +35,7 @@ git-escape-magic.self-insert() {
     } && {
         local -a words
         words=("${(@Q)${(z)lbuf}}")
-        [[ "$words[(i)${(~j:|:)__gem_patterns}]" -le $#words ]]
+        [[ "$words[(i)${(j:|:)__gem_patterns}]" -le $#words ]]
     }
     then
         local i
@@ -55,7 +55,7 @@ git-escape-magic.self-insert() {
         while [[ "$words[1]" == [A-Za-z_][A-Za-z0-9_]#=* ]]; do
             shift words
         done
-        [[ "$words[1]" == (${(~j:|:)__gem_patterns}) ]] && {
+        [[ "$words[1]" == (${~${(j:|:)__gem_patterns}}) ]] && {
             local subcommand
             subcommand="${words[1]##*/git-}"
             if [[ -z "$subcommand" ]]; then
